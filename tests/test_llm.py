@@ -1,5 +1,4 @@
 """LLMクライアント（base / mock）のテスト。"""
-import pytest
 
 from agent.llm.base import BaseLLMClient, LLMResponse, Message
 from agent.llm.mock import MockLLMClient

@@ -2,7 +2,6 @@
 import pytest
 
 from agent.core import Agent, AgentConfig, AgentState
-from agent.llm.base import Message
 from agent.llm.mock import MockLLMClient
 
 
