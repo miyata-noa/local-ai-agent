@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  pull_request:
-    branches: [main, develop]
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
 
 jobs:
@@ -13,12 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - run: pip install -r agent/requirements.txt
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
 
-      - run: flake8 agent
-      - run: mypy agent
-      - run: pytest
+      - name: flake8
+        run: flake8 agent/ tests/
+
+      - name: mypy
+        run: mypy agent/
+
+      - name: pytest
+        env:
+          USE_MOCK: "1"   # OllamaなしでCIを通す
+        run: pytest --cov=agent tests/
